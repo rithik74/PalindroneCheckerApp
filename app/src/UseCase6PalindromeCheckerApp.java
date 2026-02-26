@@ -1,31 +1,39 @@
 import java.util.Scanner;
+import java.util.Queue;
+import java.util.LinkedList;
 import java.util.Stack;
 
-public class UseCase5PalindromeCheckerApp {
+public class UseCase6PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("=== Palindrome Checker App (UC5 - Stack Based) ===");
+        System.out.println("=== Palindrome Checker App (UC6 - Queue + Stack Based) ===");
         System.out.print("Enter a string: ");
         String inputString = scanner.nextLine();
 
-        // Create a Stack to store characters
+        // Create Queue (FIFO)
+        Queue<Character> queue = new LinkedList<>();
+
+        // Create Stack (LIFO)
         Stack<Character> stack = new Stack<>();
 
-        // Push characters into stack
+        // Enqueue and Push characters
         for (int i = 0; i < inputString.length(); i++) {
-            stack.push(inputString.charAt(i));
+            char ch = inputString.charAt(i);
+            queue.add(ch);     // Enqueue
+            stack.push(ch);    // Push
         }
 
         boolean isPalindrome = true;
 
-        // Pop characters and compare with original string
-        for (int i = 0; i < inputString.length(); i++) {
-            char poppedChar = stack.pop();
+        // Compare Dequeue (FIFO) with Pop (LIFO)
+        while (!queue.isEmpty()) {
+            char fromQueue = queue.remove();  // Dequeue
+            char fromStack = stack.pop();     // Pop
 
-            if (inputString.charAt(i) != poppedChar) {
+            if (fromQueue != fromStack) {
                 isPalindrome = false;
                 break;
             }
